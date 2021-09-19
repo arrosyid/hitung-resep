@@ -70,9 +70,40 @@ class Admin extends CI_Controller
   {
     $data['tittle'] = 'Tambah Bahan';
     $data['subtittle'] = 'Tambah Bahan';
-    $this->load->view('templates/header', $data);
-    $this->load->view('v_TambahBahan');
-    $this->load->view('templates/footer');
+
+    $this->form_validation->set_rules('nm_bahan', 'Nama Bahan', 'required|trim|is_unique[tb_bahan.nm_bahan]', [
+      'is_unique' => 'Bahan Sudah Terdaftar, Silahkan Isi Bahan Lain'
+    ]);
+    $this->form_validation->set_rules('harga_perkg', 'Harga Per-KG/L', 'required|trim',);
+
+    if ($this->form_validation->run() == false) {
+      $this->load->view('templates/header', $data);
+      $this->load->view('v_TambahBahan');
+      $this->load->view('templates/footer');
+    } else {
+      $data_bahan = [
+        'nm_bahan' => htmlspecialchars($this->input->post('nm_bahan')),
+        'harga_perkg' => htmlspecialchars($this->input->post('harga_perkg')),
+      ];
+      // var_dump($data_bahan);
+      // die;
+
+      if ($this->db->insert('tb_bahan', $data_bahan)) {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Berhasil Menambah Bahan ' . $data_bahan['nm_bahan'] . '</div>'
+        );
+        redirect('admin/daftarBahan');
+      } else {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Gagal Menambah Bahan</div>'
+        );
+        redirect('admin/daftarBahan');
+      }
+    }
   }
 
   public function checkout()

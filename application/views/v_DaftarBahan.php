@@ -1,3 +1,4 @@
+<?= $this->session->flashdata('message'); ?>
 <a href="<?= base_url('admin/tambahBahan') ?>" class="btn btn-primary">Tambah Bahan</a>
 <table class="table table-bordered table-striped">
   <thead>
