@@ -1,3 +1,4 @@
+<?= $this->session->flashdata('message'); ?>
 <h3>Daftar Pesanan</h3>
 <a href="<?= base_url('admin/TambahPesanan') ?>" class="btn btn-primary">Tambah Pesanan</a>
 <table class="table table-bordered table-striped">

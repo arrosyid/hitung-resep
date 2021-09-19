@@ -52,9 +52,43 @@ class Admin extends CI_Controller
   {
     $data['tittle'] = 'Tambah Menu';
     $data['subtittle'] = 'Tambah Menu';
-    $this->load->view('templates/header', $data);
-    $this->load->view('v_TambahMenu');
-    $this->load->view('templates/footer');
+    $this->form_validation->set_rules('nm_menu', 'Nama Menu', 'required|trim|is_unique[tb_menu.nm_menu]', [
+      'is_unique' => 'Menu Sudah Terdaftar, Silahkan Isi Menu Lain'
+    ]);
+    $this->form_validation->set_rules('jml_porsi', 'Harga Per-KG/L', 'required|trim',);
+    $this->form_validation->set_rules('markup', 'Persentase Keuntungan', 'required|trim|max_length[3]',);
+    $this->form_validation->set_rules('jenis_sajian', 'Jenis Sajian', 'required|trim',);
+
+    if ($this->form_validation->run() == false) {
+      $this->load->view('templates/header', $data);
+      $this->load->view('v_TambahMenu');
+      $this->load->view('templates/footer');
+    } else {
+      $data_menu = [
+        'nm_menu' => htmlspecialchars($this->input->post('nm_menu')),
+        'jml_porsi' => htmlspecialchars($this->input->post('jml_porsi')),
+        'markup' => htmlspecialchars($this->input->post('markup')),
+        'jenis_sajian' => htmlspecialchars($this->input->post('jenis_sajian')),
+      ];
+      // var_dump($data_menu);
+      // die;
+
+      if ($this->db->insert('tb_menu', $data_menu)) {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Berhasil Menambah Bahan ' . $data_menu['nm_menu'] . '</div>'
+        );
+        redirect('admin');
+      } else {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Gagal Menambah Bahan</div>'
+        );
+        redirect('admin');
+      }
+    }
   }
 
   public function tambahResep()

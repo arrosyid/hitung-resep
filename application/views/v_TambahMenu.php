@@ -1,7 +1,7 @@
 <?php
 $form = [
   ['Nama Menu', 'nm_menu', 'isi Nama Menu', 'text'],
-  ['Jumlah Porsi Per-resep', 'jml_porsi', 'isi Jumlah Posri Per-resep', 'text'],
+  ['Jumlah Porsi Per-resep', 'jml_porsi', 'isi Jumlah Posri Per-resep', 'number'],
   ['Persentase Keuntungan', 'markup', 'isi Persentase Keuntungan yang ingin diperoleh', 'number'],
 ];
 ?>
