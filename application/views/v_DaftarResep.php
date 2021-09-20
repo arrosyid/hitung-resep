@@ -1,3 +1,4 @@
+<?= $this->session->flashdata('message'); ?>
 <div class="row">
   <div class="col-sm-8">
     <a href="<?= base_url('admin/tambahResep') ?>" class="btn btn-primary mb-1">Tambah Resep</a>

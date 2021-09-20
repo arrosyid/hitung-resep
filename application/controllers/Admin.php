@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin extends CI_Controller
 {
+  public function __construct()
+  {
+    parent::__construct();
+    $this->load->model('Bahan_model');
+    $this->load->model('Menu_model');
+  }
   public function index()
   {
     $data['tittle'] = 'HITUNG RESEP';
@@ -48,6 +54,57 @@ class Admin extends CI_Controller
     $this->load->view('templates/footer');
   }
 
+  public function tambahResep()
+  {
+    $data['tittle'] = 'Tambah Resep';
+    $data['subtittle'] = 'Tambah Resep';
+
+    $data['bahan'] = $this->Bahan_model->getAllBahan();
+    $data['menu'] = $this->Menu_model->getAllMenu();
+    $data['loop'] = $this->input->get('jml_bahan');
+    $data['id_menu'] = $this->input->get('id_menu');
+
+    if ($data['loop'] != null) {
+      for ($i = 0; $i < $data['loop']; $i++) {
+        $this->form_validation->set_rules("id_bahan$i", 'Nama Bahan', 'required|trim',);
+        $this->form_validation->set_rules("volume_bahan$i", 'Volume Bahan (g/ml)', 'required|trim',);
+      }
+    }
+    if ($this->form_validation->run() == false) {
+      $this->load->view('templates/header', $data);
+      $this->load->view('v_TambahResep');
+      $this->load->view('templates/footer');
+    } else {
+      for ($i = 0; $i < $data['loop']; $i++) {
+        $data_resep[$i] = [
+          'id_menu' => htmlspecialchars($data['id_menu']),
+          'id_bahan' => htmlspecialchars($this->input->post("id_bahan$i")),
+          'volume_bahan' => htmlspecialchars($this->input->post("volume_bahan$i")),
+        ];
+      }
+      // var_dump($data_resep);
+      // die;
+
+      if ($this->db->insert_batch('tb_resep', $data_resep)) {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      Berhasil Menambah Resep</div>'
+        );
+        redirect('admin/daftarResep');
+      } else {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      Gagal Menambah Resep</div>'
+        );
+        redirect('admin/daftarResep');
+      }
+    }
+  }
+
+
+
   public function tambahMenu()
   {
     $data['tittle'] = 'Tambah Menu';
@@ -89,15 +146,6 @@ class Admin extends CI_Controller
         redirect('admin');
       }
     }
-  }
-
-  public function tambahResep()
-  {
-    $data['tittle'] = 'Tambah Resep';
-    $data['subtittle'] = 'Tambah Resep';
-    $this->load->view('templates/header', $data);
-    $this->load->view('v_TambahResep');
-    $this->load->view('templates/footer');
   }
 
   public function tambahBahan()
