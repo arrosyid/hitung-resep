@@ -8,11 +8,18 @@ class Admin extends CI_Controller
     parent::__construct();
     $this->load->model('Bahan_model');
     $this->load->model('Menu_model');
+    $this->load->model('Pembukuan_model');
+    $this->load->model('Pesanan_model');
+    $this->load->model('Resep_model');
   }
   public function index()
   {
     $data['tittle'] = 'HITUNG RESEP';
     $data['subtittle'] = 'MENGHITUNG RESEP';
+
+    $data['menu'] = $this->Menu_model->getAllMenu();
+    $data['pesanan'] = $this->Pesanan_model->getAllPesanan();
+
     $this->load->view('templates/header', $data);
     $this->load->view('v_HitungResep');
     $this->load->view('templates/footer');
@@ -22,6 +29,9 @@ class Admin extends CI_Controller
   {
     $data['tittle'] = 'Daftar Bahan';
     $data['subtittle'] = 'Daftar Bahan';
+
+    $data['bahan'] = $this->Bahan_model->getAllBahan();
+
     $this->load->view('templates/header', $data);
     $this->load->view('v_DaftarBahan');
     $this->load->view('templates/footer');
@@ -31,6 +41,9 @@ class Admin extends CI_Controller
   {
     $data['tittle'] = 'Daftar Resep';
     $data['subtittle'] = 'Daftar Resep';
+
+    $data['resep'] = $this->Resep_model->getAllResep();
+
     $this->load->view('templates/header', $data);
     $this->load->view('v_DaftarResep');
     $this->load->view('templates/footer');
@@ -40,6 +53,9 @@ class Admin extends CI_Controller
   {
     $data['tittle'] = 'Pembukuan';
     $data['subtittle'] = 'Catatan Pemesanan Konsumen';
+
+    $data['pembukuan'] = $this->Pembukuan_model->getAllPembukuan();
+
     $this->load->view('templates/header', $data);
     $this->load->view('v_Pembukuan');
     $this->load->view('templates/footer');

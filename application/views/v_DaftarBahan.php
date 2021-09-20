@@ -10,15 +10,19 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>1</td>
-      <td>Nama Bahan</td>
-      <td>Harga Per-KG/Liter</td>
-      <td>
-        <a href="" class="btn btn-danger mb-1">Hapus</a>
-        <a href="" class="btn btn-warning mb-1">Edit</a>
-      </td>
-    </tr>
+    <?php $i = 1;
+    foreach ($bahan as $B) : ?>
+      <tr>
+        <td><?= $i ?></td>
+        <td><?= $B['nm_bahan'] ?></td>
+        <td><?= $B['harga_perkg'] ?></td>
+        <td>
+          <a href="#" class="btn btn-danger mb-1">Hapus</a>
+          <a href="#" class="btn btn-warning mb-1">Edit</a>
+        </td>
+      </tr>
+    <?php $i++;
+    endforeach; ?>
   </tbody>
   <tfoot>
     <tr>
