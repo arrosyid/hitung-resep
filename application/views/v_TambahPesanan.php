@@ -1,15 +1,15 @@
 <?php
 $form = [
-  ['Nama Pemesan', 'nm_pemesan', 'isi Nama Pemesan'],
-  ['Alamat Pengiriman', 'alamat_pengiriman', 'isi Alamat Pengiriman'],
-  ['Nomor HP', 'no_hp', 'isi Nomor HP'],
-  ['Jumlah Porsi', 'jml_porsi', 'isi Jumlah Porsi'],
+  ['Nama Pemesan', 'nm_pemesan', 'isi Nama Pemesan', 'text'],
+  ['Alamat Pengiriman', 'alamat_pengiriman', 'isi Alamat Pengiriman', 'text'],
+  ['Nomor HP', 'no_hp', 'isi Nomor HP', 'number'],
+  ['Jumlah Porsi', 'jml_porsi', 'isi Jumlah Porsi', 'number'],
 ];
 $dropdown = [
-  ['Menu Utama', 'menu', 'PILIH MENU UTAMA', ['menu1', 'menu2']],
-  ['SAYUR', 'sayur1', 'PILIH SAYUR', ['sayur1', 'sayur2']],
-  ['Menu Pelengkap', 'menu_pelengkap', 'PILIH MENU PELENGKAP', ['pelengkap1', 'pelengkap2']],
-  ['Menu Tambahan', 'menu_tambahan', 'PILIH MENU TAMBAHAN', ['tambahan1', 'tambahan2']],
+  ['Menu Utama', 'menu', 'PILIH MENU UTAMA', $menu_utama],
+  ['SAYUR', 'sayur', 'PILIH SAYUR', $sayur],
+  ['Menu Pelengkap', 'menu_pelengkap', 'PILIH MENU PELENGKAP', $menu_tambahan],
+  ['Menu Tambahan', 'menu_tambahan', 'PILIH MENU TAMBAHAN', $menu_pelengkap],
 ];
 ?>
 <form action="" method="post">
@@ -20,7 +20,7 @@ $dropdown = [
       </div>
       <div class="col-sm-10">
         <div class="form-group">
-          <input type="text" class="form-control <?= form_error($val[1]) != null ? "is-invalid" : "" ?>" name="<?= $val[1] ?>" id="<?= $val[1] ?>" placeholder="<?= $val[2] ?>" value="<?= set_value($val[1]) ?>">
+          <input type="<?= $val[3] ?>" class="form-control <?= form_error($val[1]) != null ? "is-invalid" : "" ?>" name="<?= $val[1] ?>" id="<?= $val[1] ?>" placeholder="<?= $val[2] ?>" value="<?= set_value($val[1]) ?>">
           <?= form_error($val[1], '<small class="text-danger pl-3">', '</small>'); ?>
         </div>
       </div>
@@ -37,7 +37,7 @@ $dropdown = [
           <select class="form-control <?= form_error($drop[1]) != null ? "is-invalid" : "" ?>" name="<?= $drop[1] ?>" id="<?= $drop[1] ?>">
             <option value=""><?= $drop[2] ?></option>
             <?php foreach ($drop[3] as $DR) : ?>
-              <option value="<?= $DR ?>"><?= $DR ?></option>
+              <option value="<?= $DR['nm_menu'] ?>"><?= $DR['nm_menu'] ?></option>
             <?php endforeach ?>
           </select>
           <?= form_error($drop[1], '<small class="text-danger pl-3">', '</small>'); ?>

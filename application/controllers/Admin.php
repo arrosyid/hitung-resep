@@ -49,9 +49,54 @@ class Admin extends CI_Controller
   {
     $data['tittle'] = 'Tambah Pesanan';
     $data['subtittle'] = 'Tambah Pesanan';
-    $this->load->view('templates/header', $data);
-    $this->load->view('v_TambahPesanan');
-    $this->load->view('templates/footer');
+
+    $data['menu_utama'] = $this->Menu_model->getMenuByType('jenis_sajian', 'MENU UTAMA');
+    $data['sayur'] = $this->Menu_model->getMenuByType('jenis_sajian', 'SAYUR');
+    $data['menu_tambahan'] = $this->Menu_model->getMenuByType('jenis_sajian', 'MENU TAMBAHAN');
+    $data['menu_pelengkap'] = $this->Menu_model->getMenuByType('jenis_sajian', 'MENU PELENGKAP');
+
+    $this->form_validation->set_rules('nm_pemesan', 'Nama Pemesan', 'required|trim',);
+    $this->form_validation->set_rules('alamat_pengiriman', 'Alamat Pengiriman', 'required|trim');
+    $this->form_validation->set_rules('no_hp', 'Nomor HP', 'required|trim',);
+    $this->form_validation->set_rules('jml_porsi', 'Jumlah Porsi', 'required|trim',);
+    $this->form_validation->set_rules('menu', 'Menu Utama', 'required|trim',);
+    $this->form_validation->set_rules('sayur', 'Sayur', 'required|trim',);
+    $this->form_validation->set_rules('menu_pelengkap', 'Menu Pelengkap', 'required|trim',);
+
+    if ($this->form_validation->run() == false) {
+      $this->load->view('templates/header', $data);
+      $this->load->view('v_TambahPesanan');
+      $this->load->view('templates/footer');
+    } else {
+      $data_pesanan = [
+        'nm_pemesan' => htmlspecialchars($this->input->post('nm_pemesan')),
+        'alamat_pengiriman' => strtoupper(htmlspecialchars($this->input->post('alamat_pengiriman'))),
+        'no_hp' => htmlspecialchars($this->input->post('no_hp')),
+        'jml_porsi' => htmlspecialchars($this->input->post('jml_porsi')),
+        'menu' => htmlspecialchars($this->input->post('menu')),
+        'sayur' => htmlspecialchars($this->input->post('sayur')),
+        'menu_pelengkap' => htmlspecialchars($this->input->post('menu_pelengkap')),
+        'menu_tambahan' => htmlspecialchars($this->input->post('menu_tambahan')),
+      ];
+      // var_dump($data_pesanan);
+      // die;
+
+      if ($this->db->insert('tb_pesanan', $data_pesanan)) {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      Berhasil Menambah Pesanan ' . $data_pesanan['nm_pemesan'] . '</div>'
+        );
+        redirect('admin');
+      } else {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      Gagal Menambah Pesanan</div>'
+        );
+        redirect('admin');
+      }
+    }
   }
 
   public function tambahResep()
