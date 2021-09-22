@@ -36,7 +36,7 @@
         <td><?= $R['hpp_resep'] == 0 ? '-' : 'Rp. ' . number_format($R['hpp_resep'], 0, ',', '.') ?></td>
         <td>
           <a href="#" class="btn btn-danger mb-1">Hapus</a>
-          <a href="#" class="btn btn-warning mb-1">Edit</a>
+          <a href="#" data-toggle="modal" id="<?= $R['id_resep'] ?>" data-target="#editResep" class="btn btn-warning mb-1 view-data">Edit</a>
         </td>
       </tr>
     <?php $i++;
@@ -54,3 +54,19 @@
     </tr>
   </tfoot>
 </table>
+<!-- Mengubah data sesuai dengan data yang dipilih -->
+<div class="modal fade" id="editResep" tabindex="-1" aria-labelledby="edit_ResepLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit_ResepLabel">Edit Resep</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="detailResep">
+
+      </div>
+    </div>
+  </div>
+</div>

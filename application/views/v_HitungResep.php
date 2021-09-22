@@ -35,7 +35,7 @@
         <td><?= date('d-m-Y', $P['tgl_pesanan']) ?></td>
         <td>
           <a href="#" class="btn btn-danger mb-1">Hapus</a>
-          <a href="#" class="btn btn-warning mb-1">Edit</a>
+          <a href="#" data-toggle="modal" id="<?= $P['id_pesanan'] ?>" data-target="#editPesanan" class="btn btn-warning mb-1 view-data">Edit</a>
         </td>
       </tr>
     <?php $i++;
@@ -59,49 +59,19 @@
   </tfoot>
 </table>
 <hr>
+<!-- Mengubah data Pesanan -->
+<div class="modal fade" id="editPesanan" tabindex="-1" aria-labelledby="edit_PesananLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit_PesananLabel">Edit Pesanan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="detailPesanan">
 
-<h3>Daftar Menu</h3>
-<a href="<?= base_url('admin/tambahMenu') ?>" class="btn btn-primary">Tambah Menu</a>
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>No</th>
-      <th>Nama Menu</th>
-      <th>Jenis Sajian</th>
-      <th>Harga Per-Porsi</th>
-      <th>HPP Per-Porsi</th>
-      <th>Mark up</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php $i = 1;
-    foreach ($menu as $M) : ?>
-      <tr>
-        <td><?= $i ?></td>
-        <td><?= $M['nm_menu'] ?></td>
-        <td><?= $M['jenis_sajian'] ?></td>
-        <td><?= $M['harga_porsi']  == 0 ? '-' : 'Rp. ' .  number_format($M['hpp_porsi'], 0, ',', '.') ?></td>
-        <td><?= $M['hpp_porsi']  == 0 ? '-' : 'Rp. ' .  number_format($M['markup'], 0, ',', '.') ?></td>
-        <td><?= $M['markup'] ?>%</td>
-        <td>
-          <a href="#" class="btn btn-danger mb-1">Hapus</a>
-          <a href="#" class="btn btn-warning mb-1">Edit</a>
-        </td>
-      </tr>
-    <?php $i++;
-    endforeach; ?>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th>No</th>
-      <th>Nama Menu</th>
-      <th>Jenis Sajian</th>
-      <th>Harga Per-Porsi</th>
-      <th>HPP Per-Porsi</th>
-      <th>Mark up</th>
-      <th>Action</th>
-    </tr>
-  </tfoot>
-</table>
-<hr>
+      </div>
+    </div>
+  </div>
+</div>

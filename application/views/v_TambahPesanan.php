@@ -47,6 +47,28 @@ $dropdown = [
   <?php endforeach ?>
   <div class="row">
     <div class="col-sm-2">
+      <label for="tgl_pesanan">Tanggal Pengiriman</label>
+    </div>
+    <div class="col-sm-5">
+      <div class="form-group">
+        <input type="date" class="form-control <?= form_error('tgl_pesanan') != null ? "is-invalid" : "" ?>" name="tgl_pesanan" id="tgl_pesanan" value="<?= set_value('tgl_pesanan') ?>">
+        <?= form_error('tgl_pesanan', '<small class="text-danger pl-3">', '</small>'); ?>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <label for="waktu">Waktu Pengiriman</label>
+    </div>
+    <div class="col-sm-5">
+      <div class="form-group">
+        <input type="time" class="form-control <?= form_error('waktu') != null ? "is-invalid" : "" ?>" name="waktu" id="waktu" value="<?= set_value('waktu') ?>">
+        <?= form_error('waktu', '<small class="text-danger pl-3">', '</small>'); ?>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
     </div>
     <div class="col-sm-4">
       <input type="submit" value="submit" class="btn btn-primary"></input>

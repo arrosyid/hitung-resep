@@ -24,7 +24,10 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav nav-pills">
       <li class="nav-item">
-        <a href="<?= base_url() ?>" class="nav-link <?= $tittle == 'HITUNG RESEP' || $tittle == 'Tambah Pesanan' || $tittle == 'Tambah Menu' ? 'active' : '' ?>">Home</a>
+        <a href="<?= base_url() ?>" class="nav-link <?= $tittle == 'HITUNG RESEP' || $tittle == 'Tambah Pesanan' ? 'active' : '' ?>">Home</a>
+      </li>
+      <li class="nav-item">
+        <a href="<?= base_url('admin/daftarMenu') ?>" class="nav-link <?= $tittle == 'Daftar Menu' || $tittle == 'Tambah Menu' ? 'active' : '' ?>">Daftar Menu</a>
       </li>
       <li class="nav-item">
         <a href="<?= base_url('admin/daftarResep') ?>" class="nav-link <?= $tittle == 'Daftar Resep' || $tittle == 'Tambah Resep' ? 'active' : '' ?>">Daftar Resep</a>

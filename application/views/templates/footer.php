@@ -41,6 +41,33 @@
     });
   });
 </script>
+<?php if (isset($url_ajax)) : ?>
+  <script>
+    //------------------
+    //- Modal Edit Box -
+    //------------------
+    $(function() {
+      $('.view-data').on('click', function() {
+        var <?= $id_ajax ?> = $(this).attr('id');
+        console.log(<?= $id_ajax ?>);
+
+        $.ajax({
+          url: "<?= $url_ajax ?>",
+          method: "post",
+          data: {
+            ajax_menu: '<?= $data_menu_ajax ?>',
+            <?= $id_ajax ?>: <?= $id_ajax ?>
+          },
+          success: function(data) {
+            $('<?= $html_ajax ?>').html(data);
+            $('<?= $modal_ajax ?>').modal();
+          }
+        });
+      });
+    });
+  </script>
+<?php endif ?>
+
 </body>
 
 </html>
