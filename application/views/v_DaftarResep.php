@@ -35,7 +35,7 @@
         <td><?= $R['harga_resep'] == 0 ? '-' : 'Rp. ' . number_format($R['harga_resep'], 0, ',', '.') ?></td>
         <td><?= $R['hpp_resep'] == 0 ? '-' : 'Rp. ' . number_format($R['hpp_resep'], 0, ',', '.') ?></td>
         <td>
-          <a href="#" class="btn btn-danger mb-1">Hapus</a>
+          <a href="#" onclick="deleteBtn('<?= base_url('admin/delete?type=daftarResep&id=') . $R['id_resep'] ?>')" class="btn btn-danger mb-1">Hapus</a>
           <a href="#" data-toggle="modal" id="<?= $R['id_resep'] ?>" data-target="#editResep" class="btn btn-warning mb-1 view-data">Edit</a>
         </td>
       </tr>

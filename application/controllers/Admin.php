@@ -532,4 +532,61 @@ class Admin extends CI_Controller
       $this->load->view('ajax/ajax_EditPesanan', $data);
     }
   }
+
+  public function delete()
+  {
+    $type = $this->input->get('type', true);
+    $id = $this->input->get('id', true);
+    // var_dump($id);
+    // die;
+
+    $berhasil = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data Berhasil Dihapus</div>';
+    $gagal = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data Gagal Dihapus</div>';
+
+    if ($type == 'pembukuan') {
+      if ($this->Pembukuan_model->deletePembukuanById($id)) {
+        $this->session->set_flashdata('message', $berhasil);
+        redirect('admin/pembukuan');
+      } else {
+        $this->session->set_flashdata('message', $gagal);
+        redirect('admin/pembukuan');
+      }
+    }
+    if ($type == 'pesanan') {
+      if ($this->Pesanan_model->deletePesananById($id)) {
+        $this->session->set_flashdata('message', $berhasil);
+        redirect('admin');
+      } else {
+        $this->session->set_flashdata('message', $gagal);
+        redirect('admin');
+      }
+    }
+    if ($type == 'daftarBahan') {
+      if ($this->Bahan_model->deleteBahanById($id)) {
+        $this->session->set_flashdata('message', $berhasil);
+        redirect('admin/daftarBahan');
+      } else {
+        $this->session->set_flashdata('message', $gagal);
+        redirect('admin/daftarBahan');
+      }
+    }
+    if ($type == 'daftarMenu') {
+      if ($this->Menu_model->deleteMenuById($id)) {
+        $this->session->set_flashdata('message', $berhasil);
+        redirect('admin/daftarMenu');
+      } else {
+        $this->session->set_flashdata('message', $gagal);
+        redirect('admin/daftarMenu');
+      }
+    }
+    if ($type == 'daftarResep') {
+      if ($this->Resep_model->deleteResepById($id)) {
+        $this->session->set_flashdata('message', $berhasil);
+        redirect('admin/daftarResep');
+      } else {
+        $this->session->set_flashdata('message', $gagal);
+        redirect('admin/daftarResep');
+      }
+    }
+  }
 }

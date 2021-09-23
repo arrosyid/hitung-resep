@@ -17,7 +17,7 @@
         <td><?= $B['nm_bahan'] ?></td>
         <td><?= $B['harga_perkg'] ?></td>
         <td>
-          <a href="#" class="btn btn-danger mb-1">Hapus</a>
+          <a href="#" onclick="deleteBtn('<?= base_url('admin/delete?type=daftarBahan&id=') . $B['id_bahan'] ?>')" class="btn btn-danger mb-1">Hapus</a>
           <a href="#" data-toggle="modal" id="<?= $B['id_bahan'] ?>" data-target="#editBahan" class="btn btn-warning mb-1 view-data">Edit</a>
         </td>
       </tr>

@@ -68,6 +68,16 @@
   </script>
 <?php endif ?>
 
+<script>
+  function deleteBtn(deleteUrl) {
+    var r = confirm("Apakah Anda yakin ingin menghapus data ini?");
+    if (r == true) {
+      window.location.href = deleteUrl;
+      console.log('data dihapus');
+    }
+  }
+</script>
+
 </body>
 
 </html>

@@ -28,7 +28,7 @@
         <td><?= $P['jumlah_harga'] == 0 ? '-' : 'Rp. ' .  number_format($P['jumlah_harga'], 0, ',', '.')  ?></td>
         <td><?= $P['pendapatan'] == 0 ? '-' : 'Rp. ' .  number_format($P['pendapatan'], 0, ',', '.')  ?></td>
         <td>
-          <a href="#" class="btn btn-danger mb-1">Hapus</a>
+          <a href="#" onclick="deleteBtn('<?= base_url('admin/delete?type=pembukuan&id=') . $P['id_pembukuan'] ?>')" class="btn btn-danger mb-1">Hapus</a>
           <a href="#" data-toggle="modal" id="<?= $P['id_pembukuan'] ?>" data-target="#editPembukuan" class="btn btn-success mb-1 view-data">Tambah Biaya</a>
         </td>
       </tr>

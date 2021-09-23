@@ -34,7 +34,7 @@
         <td><?= $P['biaya'] == 0 ? '-' : 'Rp. ' .  number_format($P['biaya'], 0, ',', '.') ?></td>
         <td><?= date('d-m-Y', $P['tgl_pesanan']) ?></td>
         <td>
-          <a href="#" class="btn btn-danger mb-1">Hapus</a>
+          <a href="#" onclick="deleteBtn('<?= base_url('admin/delete?type=pesanan&id=') . $P['id_pesanan'] ?>')" class="btn btn-danger mb-1">Hapus</a>
           <a href="#" data-toggle="modal" id="<?= $P['id_pesanan'] ?>" data-target="#editPesanan" class="btn btn-warning mb-1 view-data">Edit</a>
         </td>
       </tr>

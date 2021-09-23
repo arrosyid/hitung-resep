@@ -23,7 +23,7 @@
         <td><?= $M['hpp_porsi']  == 0 ? '-' : 'Rp. ' .  number_format($M['markup'], 0, ',', '.') ?></td>
         <td><?= $M['markup'] ?>%</td>
         <td>
-          <a href="#" class="btn btn-danger mb-1">Hapus</a>
+          <a href="#" onclick="deleteBtn('<?= base_url('admin/delete?type=daftarMenu&id=') . $M['id_menu'] ?>')" class="btn btn-danger mb-1">Hapus</a>
           <a href="#" data-toggle="modal" id="<?= $M['id_menu'] ?>" data-target="#editMenu" class="btn btn-warning mb-1 view-data">Edit</a>
         </td>
       </tr>
