@@ -84,11 +84,51 @@ class Admin extends CI_Controller
     $data['tittle'] = 'Pembukuan';
     $data['subtittle'] = 'Catatan Pemesanan Konsumen';
 
+    // ajax
+    $data['url_ajax'] = base_url('admin/ajax');
+    $data['data_menu_ajax'] = 'get_pembukuan';
+    $data['id_ajax'] = 'id_pembukuan';
+    $data['html_ajax'] = '#detailPembukuan';
+    $data['modal_ajax'] = '#editPembukuan';
+
+    // model
     $data['pembukuan'] = $this->Pembukuan_model->getAllPembukuan();
 
-    $this->load->view('templates/header', $data);
-    $this->load->view('v_Pembukuan');
-    $this->load->view('templates/footer');
+    $this->form_validation->set_rules('dp', 'Uang Muka/DP', 'required|trim');
+    $this->form_validation->set_rules('biaya_tambahan', 'Biaya Tambahan', 'required|trim');
+    $this->form_validation->set_rules('biaya_produksi', 'Biaya Produksi', 'required|trim');
+
+    if ($this->form_validation->run() == false) {
+      $this->load->view('templates/header', $data);
+      $this->load->view('v_Pembukuan');
+      $this->load->view('templates/footer');
+    } else {
+      $id = $this->input->post('id_pembukuan', true);
+      $data_pembukuan = [
+        'id_pembukuan' => $id,
+        'dp' => htmlspecialchars($this->input->post('dp', true)),
+        'biaya_tambahan' => htmlspecialchars($this->input->post('biaya_tambahan', true)),
+        'biaya_produksi' => htmlspecialchars($this->input->post('biaya_produksi', true)),
+      ];
+      // var_dump($data_pembukuan);
+      // die;
+
+      if ($this->Pembukuan_model->updatePembukuanById($id, $data_pembukuan)) {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Berhasil Menambah Biaya Pembukuan</div>'
+        );
+        redirect('admin/pembukuan');
+      } else {
+        $this->session->set_flashdata(
+          'message',
+          '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Gagal Menambah Biaya Pembukuan</div>'
+        );
+        redirect('admin/pembukuan');
+      }
+    }
   }
 
   public function daftarMenu()
@@ -456,14 +496,14 @@ class Admin extends CI_Controller
     if ($ajax_menu == 'get_bahan') {
       $id = $this->input->post('id_bahan');
       $data['bahan'] = $this->Bahan_model->getBahanByType('id_bahan', $id);
-      $this->load->view('ajax/ajax_editBahan', $data);
+      $this->load->view('ajax/ajax_EditBahan', $data);
     }
 
     // ajax edit menu
     if ($ajax_menu == 'get_menu') {
       $id = $this->input->post('id_menu');
       $data['menu'] = $this->Menu_model->getMenuByType('id_menu', $id);
-      $this->load->view('ajax/ajax_editMenu', $data);
+      $this->load->view('ajax/ajax_EditMenu', $data);
     }
 
     // ajax edit resep
@@ -471,7 +511,14 @@ class Admin extends CI_Controller
       $id = $this->input->post('id_resep');
       $data['bahan'] = $this->Bahan_model->getAllBahan();
       $data['resep'] = $this->Resep_model->getResepByType('id_resep', $id);
-      $this->load->view('ajax/ajax_editResep', $data);
+      $this->load->view('ajax/ajax_EditResep', $data);
+    }
+
+    // ajax edit pembukuan
+    if ($ajax_menu == 'get_pembukuan') {
+      $id = $this->input->post('id_pembukuan');
+      $data['pembukuan'] = $this->Pembukuan_model->getPembukuanByType('id_pembukuan', $id);
+      $this->load->view('ajax/ajax_EditPembukuan', $data);
     }
 
     // ajax edit pesanan
@@ -482,7 +529,7 @@ class Admin extends CI_Controller
       $data['menu_tambahan'] = $this->Menu_model->getMenuByType('jenis_sajian', 'MENU TAMBAHAN');
       $data['menu_pelengkap'] = $this->Menu_model->getMenuByType('jenis_sajian', 'MENU PELENGKAP');
       $data['pesanan'] = $this->Pesanan_model->getPesananByType('id_pesanan', $id);
-      $this->load->view('ajax/ajax_editPesanan', $data);
+      $this->load->view('ajax/ajax_EditPesanan', $data);
     }
   }
 }

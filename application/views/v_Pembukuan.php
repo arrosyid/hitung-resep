@@ -1,3 +1,4 @@
+<?= $this->session->flashdata('message'); ?>
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
@@ -28,7 +29,7 @@
         <td><?= $P['pendapatan'] == 0 ? '-' : 'Rp. ' .  number_format($P['pendapatan'], 0, ',', '.')  ?></td>
         <td>
           <a href="#" class="btn btn-danger mb-1">Hapus</a>
-          <a href="#" class="btn btn-warning mb-1">Edit</a>
+          <a href="#" data-toggle="modal" id="<?= $P['id_pembukuan'] ?>" data-target="#editPembukuan" class="btn btn-success mb-1 view-data">Tambah Biaya</a>
         </td>
       </tr>
     <?php $i++;
@@ -49,3 +50,20 @@
     </tr>
   </tfoot>
 </table>
+
+<!-- Mengubah data Menu -->
+<div class="modal fade" id="editPembukuan" tabindex="-1" aria-labelledby="edit_PembukuanLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit_PembukuanLabel">Biaya Tambahan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="detailPembukuan">
+
+      </div>
+    </div>
+  </div>
+</div>
