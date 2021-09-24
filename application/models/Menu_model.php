@@ -20,6 +20,14 @@ class Menu_model extends CI_Model
   {
     return $this->db->update('tb_menu', $data, ['id_menu' => $id]);
   }
+  public function updateMenuResep($data_resep, $data_menu)
+  {
+    $this->db->trans_start();
+    $this->db->update_batch('tb_resep', 'id_resep', $data_resep);
+    $this->db->update('tb_menu', ['id_menu' => $data_menu['id_menu']]);
+    $this->db->trans_commit();
+    return $this->db->trans_status();
+  }
   public function deleteMenuById($id)
   {
     $this->db->trans_start();

@@ -589,4 +589,31 @@ class Admin extends CI_Controller
       }
     }
   }
+
+  #=============== fungsi lainnya ================#
+  // menghitung resep
+  private function hitungResep($id_resep)
+  {
+    $resep = $this->Resep_model->getResepByType('id_resep', $id_resep);
+    $bahan_resep = $this->Resep_model->getResepByType('id_bahan', $resep['id_menu']);
+    $menu = $this->Menu_model->getMenuByType('id_menu', $resep['id_menu']);
+
+    // harga bahan
+    foreach ($bahan_resep as $BR => $val) {
+      $harga = [
+        'id_resep' => $val['id_resep'],
+        'harga_bahan' => 0,
+      ];
+      $harga['harga_bahan'] = (int) ceil($val['harga_perkg'] * ($val['volume_bahan'] / 1000));
+      $harga_bahan[$BR] = $harga;
+      // HPP perporsi
+      $menu['hpp_resep'] += $harga['harga_bahan'];
+    }
+    // hitung hpp resep
+    $menu['hpp_porsi'] = (int) ceil($menu['hpp_resep'] / $menu['jml_porsi']);
+    // hitung harga resep
+    $menu['harga_porsi'] = (int) ceil($menu['hpp_porsi'] + ($menu['hpp_porsi'] * ($menu['markup'] / 100)));
+
+    return $this->Menu_model->updateMenuResep($harga_bahan, $menu);
+  }
 }
