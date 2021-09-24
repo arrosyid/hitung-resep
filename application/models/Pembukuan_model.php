@@ -15,14 +15,14 @@ class Pembukuan_model extends CI_Model
     if ($type == 'id_pembukuan') {
       $this->db->select('tb_pembukuan.*, tb_pesanan.*')
         ->from('tb_pembukuan')
-        ->where(['id_pembukuan' => $id])
+        ->where(['tb_pembukuan.id_pembukuan' => $id])
         ->join('tb_pesanan', 'tb_pembukuan.id_pesanan = tb_pesanan.id_pesanan');
       return $this->db->get()->row_array();
     }
     if ($type == 'id_pesanan') {
       $this->db->select('tb_pembukuan.*, tb_pesanan.*')
         ->from('tb_pembukuan')
-        ->where(['id_pesanan' => $id])
+        ->where(['tb_pembukuan.id_pesanan' => $id])
         ->join('tb_pesanan', 'tb_pembukuan.id_pesanan = tb_pesanan.id_pesanan');
       return $this->db->get()->result_array();
     }

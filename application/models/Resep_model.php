@@ -24,7 +24,7 @@ class Resep_model extends CI_Model
     if ($type == 'id_menu') {
       $this->db->select('tb_resep.*, tb_menu.*, tb_bahan.*')
         ->from('tb_resep')
-        ->where(['id_menu' => $id])
+        ->where(['tb_resep.id_menu' => $id])
         ->join('tb_menu', 'tb_resep.id_menu = tb_menu.id_menu')
         ->join('tb_bahan', 'tb_resep.id_bahan = tb_bahan.id_bahan');
       return $this->db->get()->result_array();
@@ -32,7 +32,7 @@ class Resep_model extends CI_Model
     if ($type == 'id_bahan') {
       $this->db->select('tb_resep.*, tb_menu.*, tb_bahan.*')
         ->from('tb_resep')
-        ->where(['id_bahan' => $id])
+        ->where(['tb_resep.id_bahan' => $id])
         ->join('tb_menu', 'tb_resep.id_menu = tb_menu.id_menu')
         ->join('tb_bahan', 'tb_resep.id_bahan = tb_bahan.id_bahan');
       return $this->db->get()->result_array();
